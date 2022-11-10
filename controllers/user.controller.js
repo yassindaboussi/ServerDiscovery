@@ -426,7 +426,7 @@ const VerifCodeEmail = async (req, res, next) => {
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
-const SendFogetCode = async (req, res, next) => {
+const SendCodeForgot = async (req, res, next) => {
   const userMail = await User.findOne({ email: req.body.email.toLowerCase() });
   if (!userMail) {
     res.status(202).json({
@@ -772,7 +772,7 @@ const SendFogetCode = async (req, res, next) => {
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
-const VerifCodeForget = async (req, res, next) => {
+const VerifCodeForgot = async (req, res, next) => {
   const { email, codeForget } = req.body;
   if (!email || !codeForget) {
     return res.status(422).json({ error: "Something is missing" });
@@ -819,7 +819,7 @@ const VerifCodeForget = async (req, res, next) => {
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
-const ChangePasswordForget = async (req, res, next) => {
+const ChangePasswordForgot = async (req, res, next) => {
   // Change Password
   const { email, codeForget, password } = req.body;
   if (!email || !codeForget || !password) {
@@ -857,7 +857,7 @@ module.exports = {
   signin,
   SendConfirmEmail,
   VerifCodeEmail,
-  SendFogetCode,
-  VerifCodeForget,
-  ChangePasswordForget,
+  SendCodeForgot,
+  VerifCodeForgot,
+  ChangePasswordForgot,
 };
