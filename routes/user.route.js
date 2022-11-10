@@ -13,7 +13,7 @@ router.get("/VerifCodeEmail/:email/:codeVerif", userController.VerifCodeEmail); 
 //
 router.post("/SendCodeForgot", userController.SendCodeForgot); //  Send FogetCode
 router.post("/VerifCodeForgot", userController.VerifCodeForgot); //  Verif FogetCode
-router.post("/ChangePasswordForget", userController.ChangePasswordForgot); //  Change Password Forget
+router.post("/ChangePasswordForgot", userController.ChangePasswordForgot); //  Change Password Forget
 //
 
 module.exports = router;
