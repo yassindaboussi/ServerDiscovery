@@ -9,8 +9,11 @@ router.post("/signin", userController.signin); // Login
 router.post("/singup", userController.signup); // SignUp
 //
 router.post("/SendConfirmEmail", userController.SendConfirmEmail); // Confirm Email
-router.get("/VerifCodeEmail/:email/:codeVerif", userController.VerifCodeEmail); // VerifCode Email
+router.get("/VerifCodeEmail/:email/:codeVerif", userController.VerifCodeEmail); // Verif CodeEmail
 //
 router.post("/SendFogetCode", userController.SendFogetCode); //  Send FogetCode
+router.post("/VerifCodeForget", userController.VerifCodeForget); //  Verif FogetCode
+router.post("/ChangePasswordForget", userController.ChangePasswordForget); //  Change Password Forget
+//
 
 module.exports = router;

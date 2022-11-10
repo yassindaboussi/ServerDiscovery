@@ -18,7 +18,9 @@ mongoose
     useUnifiedTopology: true,
   })
   .then(() => {
-    console.log("Database connected");
+    console.log("-+-+-+-+-+-+-+-+-+-+-+-+-+-++-+");
+    console.log("MongoDB Database is connected!");
+    console.log("-+-+-+-+-+-+-+-+-+-+-+-+-+-++-+");
   })
   .catch((ex) => {
     console.log(ex);
