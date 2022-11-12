@@ -1,8 +1,68 @@
 const { User } = require("../models/user.model");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-const nodemailer = require("nodemailer");
-const crypto = require("crypto");
+const bcrypt = require("bcrypt"); // To Crypt Passwoes
+const jwt = require("jsonwebtoken"); // To Generate Token
+const nodemailer = require("nodemailer"); // To Send Emails
+const crypto = require("crypto"); // To Generate Random Numbers
+const sharp = require("sharp"); // To Resize image
+const multer = require("multer");
+var fs = require("fs");
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+////Image
+//
+const UploadAvatarUser = async (req, res, next) => {
+  const userMail = await User.findOne({ email: "dabyain@gmail.com" }); //req.body.email.toLowerCase()
+  console.log(req.body.email);
+  if (userMail) {
+    var RandomNumber = crypto.randomBytes(8).toString("hex");
+    try {
+      /*  await sharp(req.file.buffer)
+        .resize({ width: 350, height: 350, fit: sharp.fit.contain })
+        .png()
+        .toFile(
+          process.cwd() +
+            `/uploads/users/${RandomNumber + req.file.originalname}`
+        );
+      res.status(201).send("Image uploaded succesfully"); */
+
+      const file = req.file;
+      if (!file) {
+        const error = new Error("Please upload a file");
+        error.httpStatusCode = 400;
+        return next("An error has occured!");
+      } else {
+        res.status(201).send("Image uploaded succesfully");
+      }
+
+      ///////////////////////////////////////////////////////////////////////////////
+      User.findOneAndUpdate(
+        { email: req.body.email },
+        {
+          $set: {
+            codeVerif: RandomNumber + req.file.originalname,
+          },
+        }
+      ).exec(function (err, book) {
+        if (err) {
+          console.log(err);
+          res.status(500).send(err);
+        } else {
+          console.log("Avatar Has been Updated!");
+        }
+      });
+    } catch (error) {
+      console.log(error);
+      res.status(400).send(error);
+    }
+  } else {
+    console.log("aaaaaaaaaaa");
+    res.status(202).json({
+      message: "email not found",
+    });
+  }
+  ////////////////////////////////////////////////////////////////////////////
+};
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
@@ -860,4 +920,5 @@ module.exports = {
   SendCodeForgot,
   VerifCodeForgot,
   ChangePasswordForgot,
+  UploadAvatarUser,
 };
