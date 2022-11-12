@@ -11,12 +11,12 @@ var storage = multer.diskStorage({
     cb(null, "uploads/users");
   },
   filename: function (req, file, cb) {
-    //cb(null, file.originalname);
-    cb(null, Date.now() + file.originalname);
+    cb(null, file.originalname);
+    // cb(null, Date.now() + file.originalname);
   },
 });
 const upload = multer({
-  storage: storage,
+  //storage: storage,
   limits: {
     fileSize: 9000000, // Max 9 MB
   },
