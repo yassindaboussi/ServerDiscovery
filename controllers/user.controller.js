@@ -12,21 +12,21 @@ var fs = require("fs");
 ////Image
 //
 const UploadAvatarUser = async (req, res, next) => {
-  const userMail = await User.findOne({ email: "dabyain@gmail.com" }); //req.body.email.toLowerCase()
+  const userMail = await User.findOne({ email: req.body.email }); //req.body.email.toLowerCase()
   console.log(req.body.email);
   if (userMail) {
     var RandomNumber = crypto.randomBytes(8).toString("hex");
     try {
-      /*  await sharp(req.file.buffer)
+      await sharp(req.file.buffer)
         .resize({ width: 350, height: 350, fit: sharp.fit.contain })
         .png()
         .toFile(
           process.cwd() +
             `/uploads/users/${RandomNumber + req.file.originalname}`
         );
-      res.status(201).send("Image uploaded succesfully"); */
+      res.status(201).send("Image uploaded succesfully");
 
-      const file = req.file;
+      /*  const file = req.file;
       if (!file) {
         const error = new Error("Please upload a file");
         error.httpStatusCode = 400;
@@ -34,7 +34,7 @@ const UploadAvatarUser = async (req, res, next) => {
       } else {
         res.status(201).send("Image uploaded succesfully");
       }
-
+*/
       ///////////////////////////////////////////////////////////////////////////////
       User.findOneAndUpdate(
         { email: req.body.email },
