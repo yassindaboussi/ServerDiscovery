@@ -12,55 +12,19 @@ var fs = require("fs");
 ////Image
 //
 const UploadAvatarUser = async (req, res, next) => {
-  const userMail = await User.findOne({ email: req.body.email }); //req.body.email.toLowerCase()
-  console.log(req.body.email);
-  if (userMail) {
-    var RandomNumber = crypto.randomBytes(8).toString("hex");
-    try {
-      await sharp(req.file.buffer)
-        .resize({ width: 350, height: 350, fit: sharp.fit.contain })
-        .png()
-        .toFile(
-          process.cwd() +
-            `/uploads/users/${RandomNumber + req.file.originalname}`
-        );
-      res.status(201).send("Image uploaded succesfully");
 
-      /*  const file = req.file;
-      if (!file) {
-        const error = new Error("Please upload a file");
-        error.httpStatusCode = 400;
-        return next("An error has occured!");
-      } else {
-        res.status(201).send("Image uploaded succesfully");
-      }
-*/
-      ///////////////////////////////////////////////////////////////////////////////
-      User.findOneAndUpdate(
-        { email: req.body.email },
-        {
-          $set: {
-            codeVerif: RandomNumber + req.file.originalname,
-          },
-        }
-      ).exec(function (err, book) {
-        if (err) {
-          console.log(err);
-          res.status(500).send(err);
-        } else {
-          console.log("Avatar Has been Updated!");
-        }
-      });
-    } catch (error) {
-      console.log(error);
-      res.status(400).send(error);
-    }
-  } else {
-    console.log("aaaaaaaaaaa");
-    res.status(202).json({
-      message: "email not found",
-    });
+  const file = req.file;
+  if (!file) {
+    const error = new Error("Please upload a file");
+    error.httpStatusCode = 400;
+    console.log("error", "Please upload a file");
+
+    res.send({ code: 500, msg: "Please upload a file" });
+    return next({ code: 500, msg: error });
   }
+  res.send({ code: 200, msg: file });
+
+  
   ////////////////////////////////////////////////////////////////////////////
 };
 ///////////////////////////////////////////////////////////////////////////////
