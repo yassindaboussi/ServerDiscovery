@@ -867,6 +867,76 @@ const ChangePasswordForgot = async (req, res, next) => {
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
+const EditProfil = async (req, res, next) => {
+  const { username, email, password, bio } = req.body;
+  if (email && !username && !password && !bio) {
+    //
+    User.findOneAndUpdate(
+      { _id: req.body.id },
+      { email: req.body.email },
+      { new: true }
+    )
+      .then((user) => {
+        return res.status(200).json({ message: "Email Has Changed!" });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    //
+    console.log("Email Has Selected!");
+  } else if (username) {
+    //
+    User.findOneAndUpdate(
+      { _id: req.body.id },
+      { username: req.body.username },
+      { new: true }
+    )
+      .then((user) => {
+        return res.status(200).json({ message: "Username Has Changed!" });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    //
+    console.log("username Has Selected!");
+  } else if (bio) {
+    //
+    User.findOneAndUpdate(
+      { _id: req.body.id },
+      { bio: req.body.bio },
+      { new: true }
+    )
+      .then((user) => {
+        return res.status(200).json({ message: "Bio Has Changed!" });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    //
+    console.log("bio Has Selected!");
+  } else if (password) {
+    //
+    const user = await User.findOne({ _id: req.body.id });
+    bcrypt.hash(req.body.password, 10, (err, hash) => {
+      if (err) {
+        return res.status(400).json({
+          error: err,
+        });
+      } else {
+        user.password = hash;
+        user.save();
+        return res.status(200).json({ message: "password Has Changed!" });
+      }
+    });
+    //
+    console.log("password Has Selected!");
+  } else {
+    return res.status(200).json({ error: "Else!" });
+  }
+};
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 module.exports = {
   index,
   signup,
@@ -877,4 +947,6 @@ module.exports = {
   VerifCodeForgot,
   ChangePasswordForgot,
   UploadAvatarUser,
+  EditProfil,
+	
 };
