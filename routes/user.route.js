@@ -47,6 +47,8 @@ router.post(
   CheckFolderUpload,
   upload.single("image"),
   userController.UploadAvatarUser
-); // Show All Users
-
+); // Upload Avatar
+//
+router.post("/EditProfil", userController.EditProfil); //  Edit Profil
+//
 module.exports = router;
