@@ -7,13 +7,13 @@ function CheckFolderUpload(req, res, next) {
     fs.mkdirSync(dir);
     console.log("Creat uploads!");
   } else {
-    console.log("Dir uploads Exist!");
+   // console.log("Dir uploads Exist!");
   }
   if (!fs.existsSync(dir1)) {
     fs.mkdirSync(dir1);
     console.log("Creat uploads/user!");
   } else {
-    console.log("Dir uploads/user Exist!");
+  //  console.log("Dir uploads/user Exist!");
   }
   return next();
 }
