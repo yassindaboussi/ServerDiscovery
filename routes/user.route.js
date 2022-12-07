@@ -4,8 +4,13 @@ const userController = require("../controllers/user.controller");
 //
 const RequireLogin = require("../middleware/RequireLogin");
 const CheckFolderUpload = require("../middleware/CheckFolderUpload");
-
-const multer = require("multer");
+const CheckEmail = require("../middleware/CheckEmail");
+//
+var multer, storage, path, crypto;
+multer = require("multer");
+path = require("path");
+crypto = require("crypto");
+var fs = require("fs");
 //
 //configure multer
 var storage = multer.diskStorage({
@@ -28,9 +33,20 @@ const upload = multer({
     cb(undefined, true);
   },
 });
-///////////////////////////////////////////////////////
-////Image
 
+/*const upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 9000000, // Max 9 MB
+  },
+  fileFilter(req, file, cb) {
+    if (!file.originalname.match(/\.(jpg|jpeg|png|JPG|JPEG|PNG)$/)) {
+      return cb(new Error("Please upload a valid image file"));
+    }
+    cb(undefined, true);
+  },
+});*/
+///////////////////////////////////////////////////////
 router.get("/all", RequireLogin, userController.index); // Show All Users
 router.post("/signin", userController.signin); // Login
 router.post("/singup", userController.signup); // SignUp
@@ -42,11 +58,15 @@ router.post("/SendCodeForgot", userController.SendCodeForgot); //  Send FogetCod
 router.post("/VerifCodeForgot", userController.VerifCodeForgot); //  Verif FogetCode
 router.post("/ChangePasswordForgot", userController.ChangePasswordForgot); //  Change Password Forget
 //
+
 router.post(
   "/UploadAvatarUser",
   CheckFolderUpload,
   upload.single("image"),
   userController.UploadAvatarUser
-); // Show All Users
+); // Upload Avatar
+//
+router.post("/EditProfil", userController.EditProfil); //  Edit Profil
+//
 
 module.exports = router;

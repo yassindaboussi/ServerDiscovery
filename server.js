@@ -41,10 +41,14 @@ app.use(express.urlencoded({ extended: true })); // Pour analyser application/x-
 //////////////////////////////////////////////////////////////////////////////
 ////////////////////Routes
 app.use("/api/user", require("./routes/user.route"));
+app.use("/api/postuser", require("./routes/postuser.route"));
+app.use("/api/postadmin", require("./routes/postadmin.route"));
+app.use("/api/favorite", require("./routes/favorite.route"));
 /////////////////// Default Page
 
 /////////////////// http://localhost:9090/imaguser/image-1668355834015.jpg
 app.use("/imaguser", express.static(path.join(__dirname, "uploads", "users"))); //
+app.use("/imgPosts", express.static(path.join(__dirname, "uploads", "posts"))); //
 /////////////////////////////////////////////////////////////////////////
 const listingPath = path.join(__dirname, "uploads", "users");
 app.get("*", (req, res) => {
