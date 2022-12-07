@@ -21,7 +21,7 @@ app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 //////////////////////////////////////////////////////////////////////////////
 //console.log(__dirname + "/uploads");
 mongoose
-  .connect(process.env.MONGO_LOCAL, {
+  .connect(process.env.MONGO_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
