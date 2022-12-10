@@ -10,19 +10,27 @@ const AddFavorite = async (req, res, next) => {
     res.json({ error: "please add all the feilds" });
   }
   //
-
-  const postData = new FavoritePost({
-    idPost: idPost,
-    idUser: idUser,
+  FavoritePost.findOne({
+    idPost: req.body.idPost,
+    idUser: req.body.idUser,
+  }).then((pannn) => {
+    if (pannn) {
+      res.status(200).json({ message: "Favories Already Exist!" });
+    } else {
+      const postData = new FavoritePost({
+        idPost: idPost,
+        idUser: idUser,
+      });
+      postData
+        .save()
+        .then((user) => {
+          res.status(200).json({ message: "Favories Has Been Added!" });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   });
-  postData
-    .save()
-    .then((user) => {
-      res.status(200).json({ message: "Favories Has Been Added!" });
-    })
-    .catch((err) => {
-      console.log(err);
-    });
 };
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
@@ -79,8 +87,29 @@ const FavoriteDelete = (req, res) => {
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
+const VerifFavorite = async (req, res, next) => {
+  const { idPost, idUser } = req.body;
+  if (!idPost || !idUser) {
+    res.json({ error: "please add all the feilds" });
+  }
+  //
+  FavoritePost.findOne({
+    idPost: req.body.idPost,
+    idUser: req.body.idUser,
+  }).then((pannn) => {
+    if (pannn) {
+      res.status(200).json({ message: "Exist!" });
+    } else {
+      res.status(201).json({ message: "Not Exist!" });
+    }
+  });
+};
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 module.exports = {
   AddFavorite,
   FavoritefindByUser,
   FavoriteDelete,
+  VerifFavorite,
 };
