@@ -75,14 +75,16 @@ const FavoritefindByUser = (req, res) => {
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 const FavoriteDelete = (req, res) => {
-  var id = req.body._id;
-  FavoritePost.findOneAndRemove({ _id: id }, function (err) {
-    if (err) {
-      console.log(err);
-      return res.status(500).send();
+  FavoritePost.findOneAndRemove(
+    { idPost: req.body.idPost, idUser: req.body.idUser },
+    function (err) {
+      if (err) {
+        console.log(err);
+        return res.status(500).send();
+      }
+      return res.status(200).json({ message: "Favoris Has been Deleted!" });
     }
-    return res.status(200).send();
-  });
+  );
 };
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
