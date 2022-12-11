@@ -13,14 +13,6 @@ const postuserSchema = mongoose.Schema({
     type: String,
     Request: true,
   },
-  video: {
-    type: String,
-    Request: true,
-  },
-  categorie: {
-    type: String,
-    Request: true,
-  },
   postedby: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
