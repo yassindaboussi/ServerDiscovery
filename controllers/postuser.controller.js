@@ -16,24 +16,25 @@ const index = (req, res) => {
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 const AddPostUser = async (req, res, next) => {
-  const { datepost, description, photo, video, postedby, categorie } = req.body;
-  if (
-    !datepost ||
-    !description ||
-    !photo ||
-    !video ||
-    !postedby ||
-    !categorie
-  ) {
+  const { datepost, description, postedby } = req.body;
+  if (!datepost || !description || !postedby) {
     res.json({ error: "please add all the feilds" });
   }
+  const file = req.file;
   try {
+    if (!file) {
+      const error = new Error("Please upload a file");
+      error.httpStatusCode = 400;
+      console.log("error", "Please upload a file");
+      res.send({ code: 500, msg: "Please upload a file" });
+      return next({ code: 500, msg: error });
+    }
+    //res.send({ code: 200, msg: file.filename });
+    console.log(file.filename);
+    ///////////////////////////////////////////////////////////////////////////////
     console.log(req.body.datepost);
     console.log(req.body.description);
-    console.log(req.body.photo);
-    console.log(req.body.video);
     console.log(req.body.postedby);
-    console.log(req.body.categorie);
     //
     //console.log(new Date().toISOString().replace("T", " ").substring(0, 19));
     var CurrentDate = new Date()
@@ -44,15 +45,12 @@ const AddPostUser = async (req, res, next) => {
     const postData = new PostUser({
       datepost: CurrentDate,
       description: description,
-      photo: photo,
-      video: video,
+      photo: file.filename,
       postedby: postedby,
-      categorie: categorie,
     });
     postData
       .save()
       .then((user) => {
-        // res.json({ message: "SignUp Done!" });
         res.status(202).json({ message: "Post Has Added!" });
       })
       .catch((err) => {
