@@ -16,8 +16,8 @@ const index = (req, res) => {
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 const AddPostUser = async (req, res, next) => {
-  const { datepost, description, postedby } = req.body;
-  if (!datepost || !description || !postedby) {
+  const { description, postedby } = req.body;
+  if (!description || !postedby) {
     res.json({ error: "please add all the feilds" });
   }
   const file = req.file;
@@ -32,7 +32,6 @@ const AddPostUser = async (req, res, next) => {
     //res.send({ code: 200, msg: file.filename });
     console.log(file.filename);
     ///////////////////////////////////////////////////////////////////////////////
-    console.log(req.body.datepost);
     console.log(req.body.description);
     console.log(req.body.postedby);
     //
