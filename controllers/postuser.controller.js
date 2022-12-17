@@ -16,7 +16,7 @@ const index = (req, res) => {
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 const AddPostUser = async (req, res, next) => {
-  const { description, postedby } = req.body;
+  const { description, postedby, username, avatar } = req.body;
   if (!description || !postedby) {
     res.json({ error: "please add all the feilds" });
   }
