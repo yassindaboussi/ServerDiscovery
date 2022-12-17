@@ -46,6 +46,8 @@ const AddPostUser = async (req, res, next) => {
       description: description,
       photo: file.filename,
       postedby: postedby,
+      username: username,
+      avatar: avatar,
     });
     postData
       .save()
