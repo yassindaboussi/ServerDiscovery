@@ -36,8 +36,14 @@ const UploadAvatarUser = async (req, res, next) => {
         res.send({ code: 500, msg: "Please upload a file" });
         return next({ code: 500, msg: error });
       }
-      res.send({ code: 200, msg: file.filename });
-      console.log(file.filename);
+     // res.send({ code: 200, msg: file.filename });
+      // console.log(file.filename);
+      res.status(200).send(
+        JSON.stringify({
+          //200 OK
+          msg: file.filename,
+        })
+      );
       ///////////////////////////////////////////////////////////////////////////////
       User.findOneAndUpdate(
         { email: req.body.email },
