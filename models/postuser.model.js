@@ -25,6 +25,10 @@ const postuserSchema = mongoose.Schema({
     type: String,
     Request: true,
   },
+  nblike: {
+    type: String,
+    Request: true,
+  },
 });
 
 const PostUser = mongoose.model("PostUser", postuserSchema);
