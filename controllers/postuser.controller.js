@@ -34,6 +34,9 @@ const AddPostUser = async (req, res, next) => {
     ///////////////////////////////////////////////////////////////////////////////
     console.log(req.body.description);
     console.log(req.body.postedby);
+    console.log(req.body.username);
+    console.log(req.body.avatar);
+
     //
     //console.log(new Date().toISOString().replace("T", " ").substring(0, 19));
     var CurrentDate = new Date()
@@ -48,6 +51,7 @@ const AddPostUser = async (req, res, next) => {
       postedby: postedby,
       username: username,
       avatar: avatar,
+      nblike: "",
     });
     postData
       .save()
