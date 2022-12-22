@@ -36,8 +36,8 @@ const UploadAvatarUser = async (req, res, next) => {
         res.send({ code: 500, msg: "Please upload a file" });
         return next({ code: 500, msg: error });
       }
-     // res.send({ code: 200, msg: file.filename });
-      // console.log(file.filename);
+      //res.send({ code: 200, msg: file.filename });
+      console.log(file.filename);
       res.status(200).send(
         JSON.stringify({
           //200 OK
@@ -57,7 +57,7 @@ const UploadAvatarUser = async (req, res, next) => {
           console.log(err);
           res.status(500).send(err);
         } else {
-          console.log("Avatar Has been Updated!");
+          res.send({ code: 200, msg: file.filename });
         }
       });
     } catch (error) {
@@ -84,6 +84,15 @@ const signup = async (req, res, next) => {
     res.json({ error: "SignUp User Exist" });
   }
   try {
+    var items = Array(
+      "Travel is my therapy",
+      "Keep calm and travel on",
+      "Buy the ticket, take the ride",
+      "We’re going somewhere",
+      "Traveling is the best. ❤️",
+      "Get there, see it and experience it"
+    );
+    var RandomBio = items[Math.floor(Math.random() * items.length)];
     const salt = await bcrypt.genSalt(10);
     const hasedPassword = await bcrypt.hash(password, salt);
     const user = new User({
@@ -91,10 +100,11 @@ const signup = async (req, res, next) => {
       email: email.toLowerCase(),
       password: hasedPassword,
       avatar: username,
-      bio: "RandomBio //TODO",
+      bio: RandomBio,
       codeVerif: "empty",
       codeForget: "empty",
       verified: "NotYet",
+      role: "User",
     });
     user
       .save()
@@ -142,6 +152,7 @@ const signin = async (req, res, next) => {
               bio: savedUser.bio,
               avatar: savedUser.avatar,
               token: accessToken,
+              role: savedUser.role,
             })
           );
         } else {
