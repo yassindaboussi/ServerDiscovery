@@ -60,7 +60,7 @@ app.use("/api/favorite", require("./routes/favorite.route"));
 app.use("/imaguser", express.static(path.join(__dirname, "uploads", "users"))); //
 app.use("/imgPosts", express.static(path.join(__dirname, "uploads", "posts"))); //
 /////////////////////////////////////////////////////////////////////////
-const listingPath = path.join(__dirname, "uploads", "users");
+/*const listingPath = path.join(__dirname, "uploads", "users");
 app.get("*", (req, res) => {
   // Build the path of the file using the URL pathname of the request.
   const filePath = path.join(listingPath, req.path);
@@ -78,7 +78,7 @@ app.get("*", (req, res) => {
     // If the item is a file: show the content of that file.
     return res.send(fileContent);
   }
-});
+});*/
 //////////////////////////////////////////////////////////////////////////////
 //Connect to the database before listening
 connectDB().then(() => {
