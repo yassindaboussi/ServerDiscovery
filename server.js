@@ -44,12 +44,6 @@ const connectDB = async () => {
     process.exit(1);
   }
 }
-//Connect to the database before listening
-connectDB().then(() => {
-    app.listen(PORT, () => {
-        console.log("listening for requests");
-    })
-})
 //////////////////////////////////////////////////////////////////////////////
 app.use(express.json());
 app.use(morgan("dev")); // Utiliser morgan
@@ -86,6 +80,9 @@ app.get("*", (req, res) => {
   }
 });
 //////////////////////////////////////////////////////////////////////////////
-app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}/`);
-});
+//Connect to the database before listening
+connectDB().then(() => {
+    app.listen(PORT, () => {
+        console.log("listening for requests");
+    })
+})
