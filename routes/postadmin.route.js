@@ -40,7 +40,6 @@ router.post("/FindByCategory", postController.FindByCategory);
 
 router.post(
   "/AddPostAdmin",
-  CheckFolderUpload,
   upload.single("photo"),
   postController.AddPostAdmin
 ); // Upload Avatar
