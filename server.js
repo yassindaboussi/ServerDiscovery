@@ -80,6 +80,9 @@ app.get("*", (req, res) => {
   }
 });*/
 //////////////////////////////////////////////////////////////////////////////
+app.get("/", (req, res) => {
+  res.json({ message: "Are You Ready?" });
+});
 //Connect to the database before listening
 connectDB().then(() => {
     app.listen(PORT, () => {
