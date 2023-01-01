@@ -20,7 +20,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 //////////////////////////////////////////////////////////////////////////////
 //console.log(__dirname + "/uploads");
-mongoose
+/*mongoose
   .connect(process.env.MONGO_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -34,6 +34,22 @@ mongoose
     console.log(ex);
     console.log("Unable to connect to database");
   });
+*/
+const connectDB = async () => {
+  try {
+    const conn = await mongoose.connect(process.env.MONGO_URL);
+    console.log(`MongoDB Connected: ${conn.connection.host}`);
+  } catch (error) {
+    console.log(error);
+    process.exit(1);
+  }
+}
+//Connect to the database before listening
+connectDB().then(() => {
+    app.listen(PORT, () => {
+        console.log("listening for requests");
+    })
+})
 //////////////////////////////////////////////////////////////////////////////
 app.use(express.json());
 app.use(morgan("dev")); // Utiliser morgan
