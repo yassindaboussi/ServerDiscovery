@@ -44,4 +44,7 @@ router.post(
   postController.AddPostUser
 ); // Upload Avatar
 
+router.post("/deletepost", postController.deletepost); // deletPost
+router.post("/updatepost", postController.updatepost); // updatepost
+
 module.exports = router;
