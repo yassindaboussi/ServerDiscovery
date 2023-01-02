@@ -52,7 +52,7 @@ const AddPostUser = async (req, res, next) => {
       username: username,
       avatar: avatar,
       nblike: "",
-      reported: "No",
+      reported: "NO",
     });
     postData
       .save()
@@ -148,6 +148,25 @@ const GetReportedPost = (req, res) => {
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
+const CancelReport = (req, res) => {
+  let updatethis = {
+    id: req.body._id,
+    reported: "NO",
+  };
+  console.log(updatethis);
+  PostUser.findByIdAndUpdate(req.body._id, { $set: updatethis })
+    .then(() => {
+      res.json({ message: "Reported Has been Canceled" });
+    })
+    .catch((error) => {
+      res.json({
+        message: "an error occured when Cancel Report Post",
+      });
+    });
+};
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 module.exports = {
   index,
   AddPostUser,
@@ -156,4 +175,5 @@ module.exports = {
   updatepost,
   reportThispost,
   GetReportedPost,
+  CancelReport,
 };
