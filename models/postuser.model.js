@@ -29,6 +29,10 @@ const postuserSchema = mongoose.Schema({
     type: String,
     Request: true,
   },
+  reported: {
+    type: String,
+    Request: true,
+  },
 });
 
 const PostUser = mongoose.model("PostUser", postuserSchema);
