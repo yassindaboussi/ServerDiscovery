@@ -48,5 +48,6 @@ router.post("/deletepost", postController.deletepost); // deletPost
 router.post("/updatepost", postController.updatepost); // updatepost
 router.post("/reportpost", postController.reportThispost);
 router.post("/getreportedpost", postController.GetReportedPost);
+router.post("/CancelReport", postController.CancelReport);
 
 module.exports = router;
