@@ -52,6 +52,7 @@ const AddPostUser = async (req, res, next) => {
       username: username,
       avatar: avatar,
       nblike: "",
+      reported: "No",
     });
     postData
       .save()
