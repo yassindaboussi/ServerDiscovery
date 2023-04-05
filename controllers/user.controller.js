@@ -103,7 +103,7 @@ const signup = async (req, res, next) => {
       bio: RandomBio,
       codeVerif: "empty",
       codeForget: "empty",
-      verified: "YES",//NotYet
+      verified: "NotYet",//NotYet
       role: "User",
     });
     user
