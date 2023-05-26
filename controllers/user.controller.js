@@ -23,54 +23,45 @@ const index = (req, res) => {
 ////Image
 //
 const UploadAvatarUser = async (req, res, next) => {
-  const userMail = await User.findOne({ email: req.body.email }); //req.body.email.toLowerCase()
-  //console.log(req.body.email);
-  //
-  const file = req.file;
+  const userMail = await User.findOne({ email: req.body.email });
+
   if (userMail) {
     try {
+      const file = req.file;
+
       if (!file) {
         const error = new Error("Please upload a file");
         error.httpStatusCode = 400;
         console.log("error", "Please upload a file");
-        res.send({ code: 500, msg: "Please upload a file" });
-        return next({ code: 500, msg: error });
+        return res.status(400).send({ code: 500, msg: "Please upload a file" });
       }
-      //res.send({ code: 200, msg: file.filename });
+
       console.log(file.filename);
-      res.status(200).send(
-        JSON.stringify({
-          //200 OK
-          msg: file.filename,
-        })
-      );
-      ///////////////////////////////////////////////////////////////////////////////
+
       User.findOneAndUpdate(
         { email: req.body.email },
-        {
-          $set: {
-            avatar: file.filename,
-          },
-        }
-      ).exec(function (err, book) {
+        { $set: { avatar: file.filename } },
+        { returnOriginal: false }
+      ).exec(function (err, updatedUser) {
         if (err) {
           console.log(err);
-          res.status(500).send(err);
+          return res.status(500).send(err);
         } else {
-          res.send({ code: 200, msg: file.filename });
+          return res.status(200).send({ code: 200, msg: updatedUser.avatar });
         }
       });
     } catch (error) {
       console.log(error);
-      res.status(400).send(error);
+      return res.status(400).send(error);
     }
   } else {
     console.log("Email not found");
-    res.status(202).json({
+    return res.status(202).json({
       message: "Email not found",
     });
   }
 };
+
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
